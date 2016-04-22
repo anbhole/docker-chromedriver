@@ -54,15 +54,18 @@ RUN dpkg-divert --add --rename --divert /opt/google/chrome/google-chrome.real /o
 # Configure Supervisor 
 ADD ./etc/supervisord.conf /etc/
 ADD ./etc/supervisor /etc/supervisor
+ADD ./startup.sh /usr/local/bin/startup.sh
 
 # Default configuration
 ENV DISPLAY :20.0
 ENV SCREEN_GEOMETRY "1440x900x24"
 ENV CHROMEDRIVER_PORT 4444
-ENV CHROMEDRIVER_WHITELISTED_IPS "127.0.0.1"
+ENV CHROMEDRIVER_WHITELISTED_IPS ""
+#ENV CHROMEDRIVER_WHITELISTED_IPS "127.0.0.1"
 
 EXPOSE 4444
 
 VOLUME [ "/var/log/supervisor" ]
 
-CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
+#CMD ["/usr/local/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["sh", "/usr/local/bin/startup.sh"]
